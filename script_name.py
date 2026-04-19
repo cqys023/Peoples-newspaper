@@ -105,13 +105,7 @@ try:
     merger.close()
     print("✅ 合并完成：", output_pdf)
 
-    # 删除原始分页文件
-    for pdf_file in downloaded_pdfs:
-        try:
-            os.remove(pdf_file)
-            print(f"删除文件：{pdf_file}")
-        except Exception as e:
-            print(f"删除文件失败：{pdf_file}，错误：{e}")
+    # 删除原始分页文件部分已经去除，文件将保留在 `papers` 文件夹中
 
 except Exception as e:
     print("❌ 保存失败：", e)

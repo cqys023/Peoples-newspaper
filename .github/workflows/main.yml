@@ -1,0 +1,32 @@
+name: Newspaper PDF Downloader
+
+on:
+  schedule:
+    # 设置每天 10:00 AM UTC 执行
+    - cron: '0 10 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  run:
+    runs-on: ubuntu-latest  # 选择 GitHub Actions 使用的操作系统
+
+    steps:
+      # Checkout 仓库代码
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 设置 Python 环境
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # 安装依赖
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 运行 Python 脚本
+      - name: Run newspaper downloader script
+        run: python script_name.py  # 替换为你实际的 Python 脚本文件名

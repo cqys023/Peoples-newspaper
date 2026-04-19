@@ -22,11 +22,12 @@ download_dir = "papers"
 os.makedirs(download_dir, exist_ok=True)  # 这行确保文件夹被创建
 
 try:
+    print(f"请求网页: {base_url}")
     res = requests.get(base_url, headers=headers, timeout=10)
+    print(f"状态码: {res.status_code}")  # 输出状态码，确认是否能访问网页
     if res.status_code != 200:
         print(f"页面加载失败，状态码: {res.status_code}")
         exit()
-    print(f"请求成功：{base_url}")
     res.encoding = "utf-8"
     soup = BeautifulSoup(res.text, "html.parser")
 except Exception as e:
@@ -62,7 +63,9 @@ downloaded_pdfs = []  # 存储已下载的分页文件路径
 for page_url, bookmark_title in pages:
     print(f"处理：{bookmark_title}")
     try:
+        print(f"请求页面: {page_url}")
         page_res = requests.get(page_url, headers=headers, timeout=10)
+        print(f"状态码: {page_res.status_code}")  # 输出状态码，确认是否能访问
         page_res.encoding = "utf-8"
         page_soup = BeautifulSoup(page_res.text, "html.parser")
 
@@ -73,9 +76,14 @@ for page_url, bookmark_title in pages:
             pdf_path = os.path.join(download_dir, pdf_name)
 
             if not os.path.exists(pdf_path):
-                print("Downloading:", pdf_url)
-                with open(pdf_path, "wb") as f:
-                    f.write(requests.get(pdf_url).content)
+                print(f"Downloading PDF: {pdf_url}")
+                pdf_download_res = requests.get(pdf_url)
+                print(f"下载状态码: {pdf_download_res.status_code}")
+                if pdf_download_res.status_code == 200:
+                    with open(pdf_path, "wb") as f:
+                        f.write(pdf_download_res.content)
+                else:
+                    print(f"下载失败: {pdf_url}，状态码: {pdf_download_res.status_code}")
             else:
                 print("已存在:", pdf_name)
 

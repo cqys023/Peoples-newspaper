@@ -2,8 +2,8 @@ name: Newspaper PDF Downloader
 
 on:
   schedule:
-    # 设置每天 10:00 AM UTC 执行
-    - cron: '0 10 * * *'
+    # 这是 cron 表达式，表示每天 2:00 AM UTC 执行（你可以根据需求调整）
+    - cron: '0 2 * * *'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest  # 选择 GitHub Actions 使用的操作系统
 
     steps:
-      # Checkout 仓库代码
+      # Checkout 仓库代码，使用新版 v3
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # 设置 Python 环境
+      # 设置 Python 环境，使用新版 v3
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: '3.8'
 

@@ -7,17 +7,17 @@ from datetime import datetime
 
 headers = {"User-Agent": "Mozilla/5.0"}
 
-# 获取今天日期
+# 👉 获取今天日期
 today = datetime.now()
 year = today.strftime("%Y")
 month = today.strftime("%m")
 day = today.strftime("%d")
 
-# 生成URL
+# 👉 生成URL
 base_url = f"http://paper.people.com.cn/rmrb/pc/layout/{year}{month}/{day}/node_01.html"
 remark = f"人民日报 {year}年{month}月{day}日"
 
-# 保存目录改为 papers，并确保文件夹存在
+# 👉 保存目录改为 papers，并确保文件夹存在
 download_dir = "papers"
 os.makedirs(download_dir, exist_ok=True)  # 这行确保文件夹被创建
 
@@ -105,8 +105,13 @@ try:
     merger.close()
     print("✅ 合并完成：", output_pdf)
 
-    # 打印 papers 文件夹的内容以确认文件是否存在
-    print("文件夹 'papers' 中的文件：", os.listdir(download_dir))
+    # 删除原始分页文件
+    for pdf_file in downloaded_pdfs:
+        try:
+            os.remove(pdf_file)
+            print(f"删除文件：{pdf_file}")
+        except Exception as e:
+            print(f"删除文件失败：{pdf_file}，错误：{e}")
 
 except Exception as e:
     print("❌ 保存失败：", e)

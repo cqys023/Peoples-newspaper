@@ -17,12 +17,16 @@ day = today.strftime("%d")
 base_url = f"http://paper.people.com.cn/rmrb/pc/layout/{year}{month}/{day}/node_01.html"
 remark = f"人民日报 {year}年{month}月{day}日"
 
-# 👉 保存目录改为 papers
+# 👉 保存目录改为 papers，并确保文件夹存在
 download_dir = "papers"
-os.makedirs(download_dir, exist_ok=True)
+os.makedirs(download_dir, exist_ok=True)  # 这行确保文件夹被创建
 
 try:
     res = requests.get(base_url, headers=headers, timeout=10)
+    if res.status_code != 200:
+        print(f"页面加载失败，状态码: {res.status_code}")
+        exit()
+    print(f"请求成功：{base_url}")
     res.encoding = "utf-8"
     soup = BeautifulSoup(res.text, "html.parser")
 except Exception as e:

@@ -2,31 +2,32 @@ name: Peoples-newspaper
 
 on:
   schedule:
-    # 这是 cron 表达式，表示每天 2:00 AM UTC 执行（你可以根据需求调整）
-    - cron: '0 2 * * *'
+    - cron: '0 2 * * *'  # 设置每天 2:00 AM UTC 执行
   workflow_dispatch:  # 允许手动触发
 
 jobs:
   run:
-    runs-on: ubuntu-latest  # 选择 GitHub Actions 使用的操作系统
+    runs-on: ubuntu-latest
 
     steps:
-      # Checkout 仓库代码，使用新版 v3
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 设置 Python 环境，使用新版 v3
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.8'
 
-      # 安装依赖
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 运行 Python 脚本
       - name: Run newspaper downloader script
         run: python script_name.py  # 替换为你实际的 Python 脚本文件名
+
+      - name: Upload papers folder to GitHub
+        uses: actions/upload-artifact@v3  # 上传文件或文件夹
+        with:
+          name: papers
+          path: papers/  # 上传 papers 文件夹中的所有内容

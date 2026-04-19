@@ -32,6 +32,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add papers/
           git commit -m "Add merged PDFs for today's newspaper"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/cqys023/Peoples-newspaper.git
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token 用于推送

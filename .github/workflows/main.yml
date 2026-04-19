@@ -1,8 +1,9 @@
 name: Peoples-newspaper
 
+
 on:
   schedule:
-    - cron: '0 2 * * *'  # 每天 2:00 AM UTC 执行
+    - cron: '0 2 * * *'  # 设置每天 2:00 AM UTC 执行
   workflow_dispatch:  # 允许手动触发
 
 jobs:
@@ -21,17 +22,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # 安装依赖
+          pip install -r requirements.txt
 
       - name: Run newspaper downloader script
         run: python script_name.py  # 替换为你实际的 Python 脚本文件名
 
-      - name: Commit and push PDF files to GitHub
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add papers/
-          git commit -m "Add merged PDFs for today's newspaper"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token 用于推送
+      - name: Upload papers folder to GitHub
+        uses: actions/upload-artifact@v3  # 上传文件或文件夹
+        with:
+          name: papers
+          path: papers/  # 上传 papers 文件夹中的所有内容

@@ -1,10 +1,9 @@
 name: Peoples-newspaper
 
-
 on:
   schedule:
-    - cron: '0 2 * * *'  # 每天 2:00 AM UTC 执行
-  workflow_dispatch:  # 允许手动触发
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 jobs:
   run:
@@ -25,10 +24,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run newspaper downloader script
-        run: python script_name.py  # 替换为你实际的 Python 脚本文件名
+        run: python script_name.py
 
       - name: Upload papers folder to GitHub
-        uses: actions/upload-artifact@v1  # 使用 v1 版本上传文件
+        uses: actions/upload-artifact@v4
         with:
           name: papers
-          path: papers/  # 上传 papers 文件夹中的所有内容
+          path: papers/

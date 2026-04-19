@@ -28,10 +28,10 @@ jobs:
 
       - name: Commit and push PDF files to GitHub
         run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your-email@example.com"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add papers/
           git commit -m "Add merged PDFs for today's newspaper"
-          git push origin main  # 推送到主分支，或者根据你的分支名称调整
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/cqys023/Peoples-newspaper.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token 用于推送

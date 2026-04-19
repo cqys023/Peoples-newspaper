@@ -27,7 +27,7 @@ jobs:
         run: python script_name.py  # 替换为你实际的 Python 脚本文件名
 
       - name: Upload papers folder to GitHub
-        uses: actions/upload-artifact@v3  # 上传文件或文件夹
+        uses: actions/upload-artifact@v2  # 使用 v2 版本
         with:
           name: papers
           path: papers/  # 上传 papers 文件夹中的所有内容

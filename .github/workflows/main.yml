@@ -1,4 +1,4 @@
-name: Newspaper PDF Downloader
+name: Peoples-newspaper
 
 on:
   schedule:

@@ -2,7 +2,7 @@ name: Peoples-newspaper
 
 on:
   schedule:
-    - cron: '0 10 * * *'  # 每天 10:00 AM UTC 执行
+    - cron: '0 9 * * *'  # 每天 9:00 AM UTC 执行
   workflow_dispatch:  # 允许手动触发
 
 jobs:

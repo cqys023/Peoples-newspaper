@@ -30,8 +30,14 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
           git add papers/
-          git commit -m "Add merged PDFs for today's newspaper"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+          if git diff --cached --quiet; then
+            echo "没有新的PDF文件，跳过提交"
+          else
+            git commit -m "自动更新人民日报PDF"
+            git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token 用于推送
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
